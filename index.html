@@ -6,10 +6,26 @@
     <title>Lets Go ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* Neon Colors for Solid Buttons */
+            --neon-pink: #ff007f;
+            --neon-green: #00e6b8;
+            --neon-blue: #00bfff;
+            /* Glassmorphism settings */
+            --glass-bg: rgba(20, 20, 35, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text-light: #ffffff;
+            --text-muted: #b0b0c0;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            /* New Modern Dark Background */
+            background-color: #0b0914;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(76, 0, 130, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 51, 102, 0.5) 0px, transparent 50%);
             font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
             display: flex;
             justify-content: center;
@@ -17,29 +33,37 @@
             height: 100vh;
             overflow: hidden;
             text-align: center;
+            color: var(--text-light);
+            position: relative; /* For absolute positioning of falling hearts */
         }
 
+        /* The Glass Card */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 45px 35px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.15);
-            max-width: 420px;
-            width: 90%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 45px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
+                        inset 0 0 15px rgba(255, 255, 255, 0.05);
+            max-width: 380px;
+            width: 85%;
             position: relative;
+            z-index: 10;
         }
 
         h1 {
-            color: #ff4757;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
+            font-size: 38px;
+            margin-bottom: 10px;
+            margin-top: 0;
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
         }
 
         p {
-            color: #4a4a4a;
+            color: var(--text-muted);
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 30px;
@@ -47,93 +71,102 @@
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: left;
         }
 
         label {
             display: block;
-            color: #2d3436;
+            color: var(--neon-blue);
             font-weight: 600;
             font-size: 15px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
         }
 
         input {
             width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 14px;
+            padding: 16px 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             font-size: 16px;
-            font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            font-family: inherit;
             box-sizing: border-box;
             outline: none;
             transition: all 0.3s ease;
-            background: #fafafa;
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-light);
         }
 
         input:focus {
-            border-color: #ff4757;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(255, 71, 87, 0.1);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 20px;
+            margin-top: 20px;
             align-items: center;
         }
 
-        button, .next-btn {
-            padding: 14px 30px;
-            font-size: 17px;
-            font-weight: 600;
-            font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+        /* Normal Solid Buttons with Hover Effect */
+        button {
+            padding: 16px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: inherit;
             border: none;
             border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-            width: 85%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 90%;
             letter-spacing: 0.5px;
         }
 
         .next-btn {
-            background-color: #2ed573;
-            color: white;
-            box-shadow: 0 6px 20px rgba(46, 213, 115, 0.35);
+            background-color: var(--neon-green);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(0, 230, 184, 0.3);
             z-index: 2;
         }
 
-        .next-btn:hover {
-            background-color: #26af5f;
-            transform: scale(1.03);
+        .next-btn:active, .next-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 230, 184, 0.5);
         }
 
         #noBtn {
-            background-color: #ff4757;
-            color: white;
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.35);
-            transition: all 0.1s ease-out;
+            background-color: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.3);
             z-index: 9999;
             width: auto;
             padding: 12px 28px;
             font-size: 16px;
         }
+        
+        #noBtn:active, #noBtn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.5);
+        }
 
         #submitBtn {
-            background-color: #2ed573;
-            color: white;
-            box-shadow: 0 6px 20px rgba(46, 213, 115, 0.35);
+            background-color: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
             width: 100%;
         }
 
-        #submitBtn:hover {
-            background-color: #26af5f;
-            transform: scale(1.03);
+        #submitBtn:active, #submitBtn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 191, 255, 0.5);
         }
 
         .hidden {
@@ -141,15 +174,45 @@
         }
 
         .success-message {
-            color: #2ed573;
-            font-size: 17px;
+            color: var(--neon-green);
+            font-size: 18px;
             font-weight: 600;
-            margin-top: 15px;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(0, 230, 184, 0.4);
         }
 
         #detailsText {
-            font-size: 17px;
-            color: #2d3436;
+            font-size: 18px;
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        #detailsText b {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+            font-size: 22px;
+        }
+
+        /* Falling Hearts Animation CSS */
+        .falling-heart {
+            position: absolute;
+            top: -10vh;
+            color: var(--neon-pink);
+            z-index: 1; /* Behind the card */
+            pointer-events: none; /* User cannot interact with it */
+            animation: fall linear forwards;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -158,7 +221,7 @@
     <div class="card">
         <!-- PAGE 1: Initial Question -->
         <div id="pageFirst">
-            <h1>❤️</h1>
+            <h1>🚗❤️</h1>
             <p>අපි කොහෙහරි යමුද මැණික</p>
             
             <div class="buttons">
@@ -177,7 +240,7 @@
                 <input type="text" id="placeInput" placeholder="Restaurant, Beach, Whatever...">
             </div>
 
-            <div class="buttons" style="align-items: center;">
+            <div class="buttons">
                 <button id="submitBtn" onclick="sendWhatsApp()">මෙහේ යමු හොදේ...🥳</button>
             </div>
         </div>
@@ -191,6 +254,37 @@
     </div>
 
     <script>
+        // Falling Hearts logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '❤️'; // The falling element
+            
+            // Random horizontal position
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Random fall duration (between 4s and 8s)
+            heart.style.animationDuration = Math.random() * 4 + 4 + 's';
+            
+            // Random size (between 10px and 25px)
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+
+            // Random initial opacity
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+
+            document.body.appendChild(heart);
+            
+            // Remove the heart from DOM after it falls to avoid memory issues
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Create a new heart every 400ms
+        setInterval(createHeart, 400);
+
+
+        // Button moving logic
         function moveButton(event) {
             // Mobile එකේ touch කරද්දි වැරදීමකින් click වෙන එක නවත්වා ගන්නවා
             if (event) event.preventDefault();
@@ -199,31 +293,23 @@
 
             // Button එක පලවෙනි පාරට එහා මෙහා යද්දි Card එකේ සයිස් එක වෙනස් වීම නවත්වන්න
             if (noBtn.parentNode !== document.body) {
-                // Button එකේ දිග සහ පළලට සමාන හිස් div එකක් (placeholder) හදනවා
                 const placeholder = document.createElement('div');
                 placeholder.style.width = noBtn.offsetWidth + 'px';
                 placeholder.style.height = noBtn.offsetHeight + 'px';
                 
-                // ඒ හිස් div එක button එක තිබ්බ තැනින් තියනවා (එතකොට Card එකේ ඉඩ ඒ විදියටම තියෙනවා)
                 noBtn.parentNode.insertBefore(placeholder, noBtn);
-                
-                // ඊටපස්සේ button එක body එකට ගෙනියනවා
                 document.body.appendChild(noBtn);
             }
             
-            // Button එක මුළු screen එකේම ඕනෑම තැනකට යන්න පුළුවන් වෙන්න position fixed කිරීම
             noBtn.style.position = 'fixed';
             noBtn.style.transform = 'none'; 
             
-            // Button එකේ දිග සහ පළල
             const btnWidth = noBtn.offsetWidth || 100;
             const btnHeight = noBtn.offsetHeight || 50;
 
-            // Screen එකේ size එකෙන් button එකේ size එක අඩු කරලා උපරිම යන්න පුළුවන් සීමාව හදාගන්නවා
             const maxX = window.innerWidth - btnWidth - 20;
             const maxY = window.innerHeight - btnHeight - 20;
             
-            // X සහ Y අගයන් Screen සීමාව ඇතුලෙ random විදියට ගන්නවා
             const randomX = Math.max(10, Math.floor(Math.random() * maxX));
             const randomY = Math.max(10, Math.floor(Math.random() * maxY));
             
@@ -232,10 +318,7 @@
         }
 
         function goToPlacePage() {
-            // Hide the No button when moving to step 2
             document.getElementById('noBtn').style.display = 'none';
-
-            // Hide Page 1 and show Page 2
             document.getElementById('pageFirst').classList.add('hidden');
             document.getElementById('pagePlace').classList.remove('hidden');
         }
@@ -249,23 +332,18 @@
                 return;
             }
 
-            // Display choices on Success Page
             document.getElementById('detailsText').innerHTML = `
                 අපි යන්නේ:<br>
                 📍 <b>${chosenPlace}</b><br><br>
                 මම ගොඩාක් ආදරෙයි! 🥰
             `;
 
-            // Hide Page 2 and show Page 3 (Success)
             document.getElementById('pagePlace').classList.add('hidden');
             document.getElementById('pageSuccess').classList.remove('hidden');
 
-            // ඔයාගේ WhatsApp අංකය
             const myPhoneNumber = "+94704904030"; 
-            
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
 
-            // Automatically open WhatsApp after 1 second
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
             }, 1000);
