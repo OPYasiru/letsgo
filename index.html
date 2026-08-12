@@ -191,34 +191,27 @@
     </div>
 
     <script>
-        // Position the "මට බැ" button right below the "හා යමු" button initially
-        window.addEventListener('DOMContentLoaded', () => {
-            positionNoButtonInitial();
-        });
+        function moveButton(event) {
+            // Mobile එකේ touch කරද්දි වැරදීමකින් click වෙන එක නවත්වා ගන්නවා
+            if (event) event.preventDefault();
 
-        function positionNoButtonInitial() {
-            const nextBtn = document.querySelector('.next-btn');
-            const noBtn = document.getElementById('noBtn');
-            
-            // සුදු පාට කොටුව (card) ඇතුලේ දුර මැනීම සඳහා offsetTop භාවිතා කිරීම
-            noBtn.style.top = (nextBtn.offsetTop + nextBtn.offsetHeight + 15) + 'px';
-            noBtn.style.left = '50%'; // මැදට ගන්න
-        }
-
-        function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
             // Button එක මුළු screen එකේම ඕනෑම තැනකට යන්න පුළුවන් වෙන්න position fixed කිරීම
             noBtn.style.position = 'fixed';
-            noBtn.style.transform = 'none'; // මුලින් මැදට ගන්න දාලා තියෙන transform එක අයින් කිරීම
+            noBtn.style.transform = 'none'; 
             
-            // Get viewport dimensions
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            // Button එකේ දිග සහ පළල
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Screen එකේ size එකෙන් button එකේ size එක අඩු කරලා උපරිම යන්න පුළුවන් සීමාව හදාගන්නවා
+            const maxX = window.innerWidth - btnWidth - 20;
+            const maxY = window.innerHeight - btnHeight - 20;
             
-            // Generate random coordinates anywhere on the screen
-            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+            // X සහ Y අගයන් Screen සීමාව ඇතුලෙ random විදියට ගන්නවා
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
             
             noBtn.style.top = randomY + 'px';
             noBtn.style.left = randomX + 'px';
@@ -258,7 +251,7 @@
             
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
 
-            // Automatically open WhatsApp after 3 seconds
+            // Automatically open WhatsApp after 1 second
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
             }, 1000);
