@@ -191,56 +191,44 @@
     </div>
 
     <script>
-        // Font එක load වෙලා ඉවර වුණාම (button size හරියටම ආවට පස්සේ) position එක හදන්න
-        window.addEventListener('load', () => {
+        // Position the "මට බැ" button right below the "හා යමු" button initially
+        window.addEventListener('DOMContentLoaded', () => {
             positionNoButtonInitial();
-        });
-
-        // Screen එකේ size එක වෙනස් වෙද්දි (උදා: phone එක හරවද්දි) button එක ආයෙත් හදාගන්න
-        window.addEventListener('resize', () => {
-            const noBtn = document.getElementById('noBtn');
-            // Button එක දැනටමත් move වෙලා නැත්නම් විතරක් යාවත්කාලීන කරන්න
-            if (noBtn.getAttribute('data-moved') !== 'true') {
-                positionNoButtonInitial();
-            }
         });
 
         function positionNoButtonInitial() {
             const nextBtn = document.querySelector('.next-btn');
             const noBtn = document.getElementById('noBtn');
             
-            // 'හා යමු' button එක screen එකේ තියෙන තැන මැනගන්නවා
-            const nextBtnRect = nextBtn.getBoundingClientRect();
-            
-            // 'fixed' දාන නිසා button එක card එකෙන් සම්පූර්ණයෙන්ම වෙන් වෙනවා (අනිත් දේවල් හෙල්ලෙන්නේ නෑ)
-            noBtn.style.position = 'fixed';
-            noBtn.style.transform = 'none'; 
-            noBtn.style.margin = '0';
-            
-            // 'හා යමු' button එකට හරියටම යටින් 'මට බැ' button එක තැබීම
-            noBtn.style.top = (nextBtnRect.bottom + 15) + 'px';
-            noBtn.style.left = (nextBtnRect.left + (nextBtnRect.width / 2) - (noBtn.offsetWidth / 2)) + 'px';
+            // සුදු පාට කොටුව (card) ඇතුලේ දුර මැනීම සඳහා offsetTop භාවිතා කිරීම
+            noBtn.style.top = (nextBtn.offsetTop + nextBtn.offsetHeight + 15) + 'px';
+            noBtn.style.left = '50%'; // මැදට ගන්න
         }
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            noBtn.setAttribute('data-moved', 'true'); // Move වුණා කියලා සලකුණු කරගන්නවා
             
-            // Screen එකෙන් පිට පනින්නේ නැති වෙන්න 15px ක margin එකක් (padding) තියාගන්නවා
-            const padding = 15;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            // Button එක මුළු screen එකේම ඕනෑම තැනකට යන්න පුළුවන් වෙන්න position fixed කිරීම
+            noBtn.style.position = 'fixed';
+            noBtn.style.transform = 'none'; // මුලින් මැදට ගන්න දාලා තියෙන transform එක අයින් කිරීම
             
-            // අහඹු තැන් හදන්නේ screen සීමාව ඇතුලත (padding සීමාවෙන් ඇතුලේ) පමණයි
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            // Get viewport dimensions
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            // Generate random coordinates anywhere on the screen
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
             
             noBtn.style.top = randomY + 'px';
             noBtn.style.left = randomX + 'px';
         }
 
         function goToPlacePage() {
+            // Hide the No button when moving to step 2
             document.getElementById('noBtn').style.display = 'none';
+
+            // Hide Page 1 and show Page 2
             document.getElementById('pageFirst').classList.add('hidden');
             document.getElementById('pagePlace').classList.remove('hidden');
         }
@@ -254,18 +242,23 @@
                 return;
             }
 
+            // Display choices on Success Page
             document.getElementById('detailsText').innerHTML = `
                 අපි යන්නේ:<br>
                 📍 <b>${chosenPlace}</b><br><br>
                 මම ගොඩාක් ආදරෙයි! 🥰
             `;
 
+            // Hide Page 2 and show Page 3 (Success)
             document.getElementById('pagePlace').classList.add('hidden');
             document.getElementById('pageSuccess').classList.remove('hidden');
 
+            // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (Country code + number, e.g., 15551234567)
             const myPhoneNumber = "+94704904030"; 
+            
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
 
+            // Automatically open WhatsApp after 3 seconds
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
             }, 1000);
