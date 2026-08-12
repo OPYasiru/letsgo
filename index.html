@@ -197,9 +197,17 @@
 
             const noBtn = document.getElementById('noBtn');
 
-            // ප්‍රධාන වෙනස: Card එකේ තියෙන blur effect එක නිසා position: fixed අවුල් යන එක නවත්වන්න,
-            // Button එක කෙලින්ම Body එකට ගෙනියනවා. එතකොට හරියටම screen එක ඇතුලෙ විතරක් වැඩ කරනවා.
+            // Button එක පලවෙනි පාරට එහා මෙහා යද්දි Card එකේ සයිස් එක වෙනස් වීම නවත්වන්න
             if (noBtn.parentNode !== document.body) {
+                // Button එකේ දිග සහ පළලට සමාන හිස් div එකක් (placeholder) හදනවා
+                const placeholder = document.createElement('div');
+                placeholder.style.width = noBtn.offsetWidth + 'px';
+                placeholder.style.height = noBtn.offsetHeight + 'px';
+                
+                // ඒ හිස් div එක button එක තිබ්බ තැනින් තියනවා (එතකොට Card එකේ ඉඩ ඒ විදියටම තියෙනවා)
+                noBtn.parentNode.insertBefore(placeholder, noBtn);
+                
+                // ඊටපස්සේ button එක body එකට ගෙනියනවා
                 document.body.appendChild(noBtn);
             }
             
@@ -212,7 +220,6 @@
             const btnHeight = noBtn.offsetHeight || 50;
 
             // Screen එකේ size එකෙන් button එකේ size එක අඩු කරලා උපරිම යන්න පුළුවන් සීමාව හදාගන්නවා
-            // 20ක් අඩු කරන්නේ screen එකේ අයිනටම ගෑවෙන්නේ නැති වෙන්න
             const maxX = window.innerWidth - btnWidth - 20;
             const maxY = window.innerHeight - btnHeight - 20;
             
