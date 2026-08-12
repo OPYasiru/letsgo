@@ -196,16 +196,23 @@
             if (event) event.preventDefault();
 
             const noBtn = document.getElementById('noBtn');
+
+            // ප්‍රධාන වෙනස: Card එකේ තියෙන blur effect එක නිසා position: fixed අවුල් යන එක නවත්වන්න,
+            // Button එක කෙලින්ම Body එකට ගෙනියනවා. එතකොට හරියටම screen එක ඇතුලෙ විතරක් වැඩ කරනවා.
+            if (noBtn.parentNode !== document.body) {
+                document.body.appendChild(noBtn);
+            }
             
             // Button එක මුළු screen එකේම ඕනෑම තැනකට යන්න පුළුවන් වෙන්න position fixed කිරීම
             noBtn.style.position = 'fixed';
             noBtn.style.transform = 'none'; 
             
             // Button එකේ දිග සහ පළල
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
+            const btnWidth = noBtn.offsetWidth || 100;
+            const btnHeight = noBtn.offsetHeight || 50;
 
             // Screen එකේ size එකෙන් button එකේ size එක අඩු කරලා උපරිම යන්න පුළුවන් සීමාව හදාගන්නවා
+            // 20ක් අඩු කරන්නේ screen එකේ අයිනටම ගෑවෙන්නේ නැති වෙන්න
             const maxX = window.innerWidth - btnWidth - 20;
             const maxY = window.innerHeight - btnHeight - 20;
             
@@ -246,7 +253,7 @@
             document.getElementById('pagePlace').classList.add('hidden');
             document.getElementById('pageSuccess').classList.remove('hidden');
 
-            // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (Country code + number, e.g., 15551234567)
+            // ඔයාගේ WhatsApp අංකය
             const myPhoneNumber = "+94704904030"; 
             
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
