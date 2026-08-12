@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Date For Us ❤️</title>
+    <title>Lets Go ❤️</title>
     <!-- Importing beautiful Google Fonts supporting both Sinhala and English beautifully -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -175,8 +175,8 @@
             <p>ඔයා ආස තැනකට අපි යමු, කොහෙද සුදු අපි යන්නෙ? 👻</p>
             
             <div class="form-group">
-                <label for="placeInput">තැන ලියන්න:</label>
-                <input type="text" id="placeInput" placeholder="ဥසී: Restaurant, Beach...">
+                <label for="placeInput">යන්නෙ කොහෙද:</label>
+                <input type="text" id="placeInput" placeholder="Restaurant, Beach, Whatever...">
             </div>
 
             <div class="buttons" style="align-items: center;">
@@ -187,8 +187,8 @@
         <!-- PAGE 3: Success & WhatsApp Redirect -->
         <div id="pageSuccess" class="hidden">
             <h1>Yay! 🎉</h1>
-            <p id="detailsText">ප්‍රීතිමත් පණිවිඩය සූදානම් කරමින් පවතී...</p>
-            <p class="success-message">WhatsApp වෙත යවමින් පවතී... ❤️</p>
+            <p id="detailsText">යේ යේ අපි යන්නයි යන්නේ...</p>
+            <p class="success-message">WhatsApp msg එක එවන්න... ❤️</p>
         </div>
     </div>
 
@@ -235,14 +235,14 @@
             const chosenPlace = document.getElementById('placeInput').value.trim();
 
             if (!chosenPlace) {
-                alert("කරුණාකර යන්න ආස තැනක් ලියන්න! ❤️");
+                alert("යන්න ආස තැනක් Type කරන්න ❤️");
                 document.getElementById('placeInput').focus();
                 return;
             }
 
             // Display choices on Success Page
             document.getElementById('detailsText').innerHTML = `
-                ඔයා තෝරාගත් තැන:<br>
+                අපි යන්නේ:<br>
                 📍 <b>${chosenPlace}</b><br><br>
                 මම ගොඩාක් ආදරෙයි! 🥰
             `;
@@ -252,14 +252,14 @@
             document.getElementById('pageSuccess').classList.remove('hidden');
 
             // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (Country code + number, e.g., 15551234567)
-            const myPhoneNumber = "YOUR_PHONE_NUMBER"; 
+            const myPhoneNumber = "+94704904030"; 
             
-            const message = encodeURIComponent(`සුදූ අපි යමු! ${chosenPlace} මම ගොඩාක් ආදරෙයි 🥺🌎`);
+            const message = encodeURIComponent(`සුදූ... අපි යමු! ${chosenPlace}.. මම ගොඩාක් ආදරෙයි 🥺🌎`);
 
             // Automatically open WhatsApp after 3 seconds
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
-            }, 3000);
+            }, 1000);
         }
     </script>
 
