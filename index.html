@@ -191,39 +191,44 @@
     </div>
 
     <script>
-        function moveButton(e) {
-            // Touch කරද්දි click වෙන එක නවත්තන්න
-            if(e) e.preventDefault(); 
+        // Position the "මට බැ" button right below the "හා යමු" button initially
+        window.addEventListener('DOMContentLoaded', () => {
+            positionNoButtonInitial();
+        });
 
+        function positionNoButtonInitial() {
+            const nextBtn = document.querySelector('.next-btn');
             const noBtn = document.getElementById('noBtn');
             
-            // Button එක fixed කරලා screen එකෙන් පිට යන්නේ නැති වෙන්න හදනවා
-            noBtn.style.position = 'fixed';
-            noBtn.style.margin = '0'; // Margin තිබ්බොත් එළියට පනින්න පුළුවන්, ඒක අයින් කරනවා
-            
-            // Button එකේ දිග පළල ගන්නවා
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
+            // සුදු පාට කොටුව (card) ඇතුලේ දුර මැනීම සඳහා offsetTop භාවිතා කිරීම
+            noBtn.style.top = (nextBtn.offsetTop + nextBtn.offsetHeight + 15) + 'px';
+            noBtn.style.left = '50%'; // මැදට ගන්න
+        }
 
-            // Screen එකේ දිග පළල ගන්නවා
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
             
-            // Button එක screen එකෙන් පිටට නොයන්න උපරිම දුර හදනවා (Safe borders: 10px)
-            const maxX = screenWidth - btnWidth - 10;
-            const maxY = screenHeight - btnHeight - 10;
+            // Button එක මුළු screen එකේම ඕනෑම තැනකට යන්න පුළුවන් වෙන්න position fixed කිරීම
+            noBtn.style.position = 'fixed';
+            noBtn.style.transform = 'none'; // මුලින් මැදට ගන්න දාලා තියෙන transform එක අයින් කිරීම
             
-            // Random අගයන් 10 ත් උපරිම දුරත් අතරින් ගන්නවා
-            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+            // Get viewport dimensions
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            // Generate random coordinates anywhere on the screen
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
             
             noBtn.style.top = randomY + 'px';
             noBtn.style.left = randomX + 'px';
-            noBtn.style.transform = 'none';
         }
 
         function goToPlacePage() {
+            // Hide the No button when moving to step 2
             document.getElementById('noBtn').style.display = 'none';
+
+            // Hide Page 1 and show Page 2
             document.getElementById('pageFirst').classList.add('hidden');
             document.getElementById('pagePlace').classList.remove('hidden');
         }
@@ -237,19 +242,23 @@
                 return;
             }
 
+            // Display choices on Success Page
             document.getElementById('detailsText').innerHTML = `
                 අපි යන්නේ:<br>
                 📍 <b>${chosenPlace}</b><br><br>
                 මම ගොඩාක් ආදරෙයි! 🥰
             `;
 
+            // Hide Page 2 and show Page 3 (Success)
             document.getElementById('pagePlace').classList.add('hidden');
             document.getElementById('pageSuccess').classList.remove('hidden');
 
+            // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (Country code + number, e.g., 15551234567)
             const myPhoneNumber = "+94704904030"; 
             
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
 
+            // Automatically open WhatsApp after 3 seconds
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
             }, 1000);
