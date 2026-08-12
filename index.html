@@ -118,13 +118,12 @@
             background-color: #ff4757;
             color: white;
             box-shadow: 0 6px 20px rgba(255, 71, 87, 0.35);
-            position: absolute;
+            /* මුලින්ම absolute කරන්නේ නැතුව සාමාන්‍ය විදිහට තියෙන්න දෙනවා */
             transition: all 0.1s ease-out;
             z-index: 9999;
             width: auto;
             padding: 12px 28px;
             font-size: 16px;
-            transform: translateX(-50%);
         }
 
         #submitBtn {
@@ -166,7 +165,8 @@
             
             <div class="buttons">
                 <button class="next-btn" onclick="goToPlacePage()">හා යමු</button>
-                <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">මට බැ</button>
+                <!-- onmouseover සහ ontouchstart එකෙන් අල්ලන්න යනකොට button එක පනිනවා -->
+                <button id="noBtn" onmouseover="moveButton(event)" ontouchstart="moveButton(event)">මට බැ</button>
             </div>
         </div>
 
@@ -194,24 +194,16 @@
     </div>
 
     <script>
-        // Position the "මට බැ" button right below the "හා යමු" button initially
-        window.addEventListener('DOMContentLoaded', () => {
-            positionNoButtonInitial();
-        });
+        function moveButton(e) {
+            // Touch කරද්දි click වෙන එක නවත්තන්න
+            if(e) e.preventDefault(); 
 
-        function positionNoButtonInitial() {
-            const nextBtn = document.querySelector('.next-btn');
-            const noBtn = document.getElementById('noBtn');
-            const rect = nextBtn.getBoundingClientRect();
-            
-            noBtn.style.top = (rect.bottom + 15) + 'px';
-            noBtn.style.left = (rect.left + (rect.width / 2) - (noBtn.offsetWidth / 2)) + 'px';
-        }
-
-        function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Get viewport dimensions
+            // Button එක අල්ලන්න යද්දි විතරක් ඒක 'fixed' කරලා screen එක පුරා පනින්න හදනවා
+            noBtn.style.position = 'fixed';
+            
+            // Viewport dimensions
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
@@ -221,6 +213,7 @@
             
             noBtn.style.top = randomY + 'px';
             noBtn.style.left = randomX + 'px';
+            noBtn.style.transform = 'none'; // කලින් තිබ්බ transform අයින් කරනවා
         }
 
         function goToPlacePage() {
@@ -252,12 +245,11 @@
             document.getElementById('pagePlace').classList.add('hidden');
             document.getElementById('pageSuccess').classList.remove('hidden');
 
-            // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (Country code + number, e.g., 15551234567)
             const myPhoneNumber = "+94704904030"; 
             
             const message = encodeURIComponent(`සුදූ... අපි යමු ${chosenPlace}.. මම ගොඩාක් ආදරෙයි මැණික..`);
 
-            // Automatically open WhatsApp after 3 seconds
+            // Automatically open WhatsApp after 1 seconds
             setTimeout(() => {
                 window.location.href = `https://wa.me/${myPhoneNumber}?text=${message}`;
             }, 1000);
